@@ -11,7 +11,11 @@ $ErrorActionPreference = "Stop"
 
 $completeFile="c:\temp\prereqsComplete"
 if (!(Test-Path -Path "c:\temp")) {
-    md "c:\temp"
+    New-Item -Path "c:\temp" -ItemType directory
+}
+
+if (!(Test-Path -Path "c:\src")) {
+    New-Item -Path "c:\src" -ItemType directory
 }
 
 $step=1
