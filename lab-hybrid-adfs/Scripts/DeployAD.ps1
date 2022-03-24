@@ -11,11 +11,7 @@ $ErrorActionPreference = "Stop"
 
 $completeFile="c:\temp\prereqsComplete"
 if (!(Test-Path -Path "c:\temp")) {
-    New-Item -Path "c:\temp" -ItemType directory
-}
-
-if (!(Test-Path -Path "c:\src")) {
-    New-Item -Path "c:\src" -ItemType directory
+    md "c:\temp"
 }
 
 $step=1
@@ -61,7 +57,11 @@ if (!(Test-Path -Path "$($completeFile)$step")) {
                            -IncludeManagementTools `
                            -IncludeAllSubFeature 
 
-    Install-ADDSForest -DomainName $domain -DomainMode "7" -ForestMode "7" -Force:$true -NoRebootOnCompletion:$True -InstallDns:$true -CreateDnsDelegation:$false -SafeModeAdministratorPassword $smPassword 
+    Install-ADDSForest -DomainName $domain `
+                       -DomainMode Win2012 `
+                       -ForestMode Win2012 `
+                       -Force `
+                       -SafeModeAdministratorPassword $smPassword 
 
     #record that we got this far
     New-Item -ItemType file "$($completeFile)$step"

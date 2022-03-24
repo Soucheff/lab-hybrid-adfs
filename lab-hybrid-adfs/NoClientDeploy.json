@@ -251,6 +251,73 @@
       }
     },
     {
+      "name": "[concat(variables('adVMName'),'/Microsoft.Powershell.DSC')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[variables('location')]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "Microsoft.Resources/Deployments/adVMs"
+      ],
+      "tags": {
+        "displayName": "adDSC"
+      },
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.83",
+        "forceUpdateTag": "1.02",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "modulesUrl": "[variables('adDSCTemplate')]",
+          "configurationFunction": "[variables('adDSCConfigurationFunction')]",
+          "properties": [
+            {
+              "Name": "Subject",
+              "Value": "[variables('WAPPubIpDnsFQDN')]",
+              "TypeName": "System.String"
+            },
+            {
+              "Name": "ADFSFarmCount",
+              "Value": "[parameters('AdfsFarmCount')]",
+              "TypeName": "System.Integer"
+            },
+            {
+              "Name": "AdminCreds",
+              "Value": {
+                "UserName": "[parameters('adminUsername')]",
+                "Password": "PrivateSettingsRef:AdminPassword"
+              },
+              "TypeName": "System.Management.Automation.PSCredential"
+            },
+            {
+              "Name": "ADFSIPAddress",
+              "Value": "[parameters('adfsIP')]",
+              "TypeName": "System.String"
+            },
+            {
+              "Name": "usersArray",
+              "Value": "[parameters('usersArray')]",
+              "TypeName": "System.Object"
+            },
+            {
+              "Name": "UserCreds",
+              "Value": {
+                "UserName": "user",
+                "Password": "PrivateSettingsRef:UserPassword"
+              },
+              "TypeName": "System.Management.Automation.PSCredential"
+            }
+          ]
+        },
+        "protectedSettings": {
+          "Items": {
+            "AdminPassword": "[parameters('adminPassword')]",
+            "UserPassword": "[parameters('defaultUserPassword')]"
+          }
+        }
+      }
+    },
+    {
       "name": "adfsVMs",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-01-01",
@@ -278,6 +345,49 @@
           "wapVMName": { "value": "[variables('wapVMName')]" },
           "deploymentNumber": { "value": "[parameters('deploymentNumber')]" },
           "adfsFarmCount": { "value": "[parameters('AdfsFarmCount')]" }
+        }
+      }
+    },
+    {
+      "name": "[concat(variables('adfsVMName'), copyIndex(1),'/Microsoft.Powershell.DSC')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "location": "[variables('location')]",
+      "apiVersion": "2015-06-15",
+      "copy": {
+        "name": "adfsDscCopy",
+        "count": "[variables('adfsDeployCount')]"
+      },
+      "dependsOn": [
+        "adfsVMs",
+        "[concat('Microsoft.Compute/virtualMachines/', variables('adVMName'),'/extensions/Microsoft.Powershell.DSC')]"
+      ],
+      "tags": {
+        "displayName": "adfsDSC"
+      },
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.83",
+        "autoUpgradeMinorVersion": true,
+        "forceUpdateTag": "1.01",
+        "settings": {
+          "modulesUrl": "[variables('adfsDSCTemplate')]",
+          "configurationFunction": "[variables('adfsDSCConfigurationFunction')]",
+          "properties": [
+            {
+              "Name": "AdminCreds",
+              "Value": {
+                "UserName": "[parameters('adminUsername')]",
+                "Password": "PrivateSettingsRef:AdminPassword"
+              },
+              "TypeName": "System.Management.Automation.PSCredential"
+            }
+          ]
+        },
+        "protectedSettings": {
+          "Items": {
+            "AdminPassword": "[parameters('adminPassword')]"
+          }
         }
       }
     },
