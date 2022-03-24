@@ -57,14 +57,7 @@ if (!(Test-Path -Path "$($completeFile)$step")) {
                            -IncludeManagementTools `
                            -IncludeAllSubFeature 
 
-    Install-ADDSForest -DomainName $domain `
-                       -DomainMode "7" `
-                       -ForestMode "7" ` 
-                       -Force:$true `
-                       -NoRebootOnCompletion:$True ` 
-                       -InstallDns:$true ` 
-                       -CreateDnsDelegation:$false ` 
-                       -SafeModeAdministratorPassword $smPassword 
+    Install-ADDSForest -DomainName $domain -DomainMode "7" -ForestMode "7" -Force:$true -NoRebootOnCompletion:$True -InstallDns:$true -CreateDnsDelegation:$false -SafeModeAdministratorPassword $smPassword 
 
     #record that we got this far
     New-Item -ItemType file "$($completeFile)$step"
