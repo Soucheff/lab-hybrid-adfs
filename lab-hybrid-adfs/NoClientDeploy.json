@@ -290,20 +290,29 @@
               "Name": "usersArray",
               "Value": "[parameters('usersArray')]",
               "TypeName": "System.Object"
+            },
+            {
+              "Name": "AdminCreds",
+              "Value": {
+                "UserName": "[parameters('adminUsername')]",
+                "Password": "PrivateSettingsRef:AdminPassword"
+              },
+              "TypeName": "System.Management.Automation.PSCredential"
+            },
+            {
+              "Name": "UserCreds",
+              "Value": {
+                "UserName": "user",
+                "Password": "PrivateSettingsRef:UserPassword"
+              },
+              "TypeName": "System.Management.Automation.PSCredential"
             }
-            
           ]
         },
         "protectedSettings": {
-          "configurationArguments": {
-            "UserCreds": {
-              "Username": "user",
-              "Password": "[parameters('defaultUserPassword')]"
-            },
-            "AdminCreds": {
-              "Username": "[parameters('adminUsername')]",
-              "Password": "[parameters('adminPassword')]"
-            }
+          "Items": {
+            "AdminPassword": "[parameters('adminPassword')]",
+            "UserPassword": "[parameters('defaultUserPassword')]"
           }
         }
       }
