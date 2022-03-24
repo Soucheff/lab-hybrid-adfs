@@ -8,6 +8,7 @@ configuration DomainController
         [String]$Subject,
 
         [Parameter(Mandatory)]
+        [ValidateNotNullorEmpty()]
         [Int]$ADFSFarmCount,
 
         [Parameter(Mandatory)]
@@ -15,9 +16,11 @@ configuration DomainController
         [System.Management.Automation.PSCredential]$AdminCreds,
 
         [Parameter(Mandatory)]
+        [ValidateNotNullorEmpty()]
         [String]$ADFSIPAddress,
 
 		[Parameter(Mandatory)]
+        [ValidateNotNullorEmpty()]
 		[Object]$usersArray,
 
 		[Parameter(Mandatory)]
