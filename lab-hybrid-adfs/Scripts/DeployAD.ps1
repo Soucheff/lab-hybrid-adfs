@@ -58,8 +58,6 @@ if (!(Test-Path -Path "$($completeFile)$step")) {
                            -IncludeAllSubFeature 
 
     Install-ADDSForest -DomainName $domain `
-                       -DomainMode Win2019 `
-                       -ForestMode Win2019 `
                        -Force `
                        -SafeModeAdministratorPassword $smPassword 
 
