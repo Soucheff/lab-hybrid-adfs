@@ -5,7 +5,6 @@ configuration DomainController
    param
    (
         [Parameter(Mandatory)]
-        [ValidateNotNullorEmpty()]
         [String]$Subject,
 
         [Parameter(Mandatory)]
