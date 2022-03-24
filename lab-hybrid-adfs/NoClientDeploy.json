@@ -270,12 +270,29 @@
         "settings": {
           "modulesUrl": "[variables('adDSCTemplate')]",
           "configurationFunction": "[variables('adDSCConfigurationFunction')]",
-          "configurationArguments": {
-            "Subject": "[variables('WAPPubIpDnsFQDN')]",
-            "ADFSFarmCount": "[parameters('AdfsFarmCount')]",
-            "ADFSIPAddress": "[parameters('adfsIP')]",
-            "usersArray": "[parameters('usersArray')]"
-          }
+          "properties": [
+            {
+              "Name": "Subject",
+              "Value": "[variables('WAPPubIpDnsFQDN')]",
+              "TypeName": "System.String"
+            },
+            {
+              "Name": "ADFSFarmCount",
+              "Value": "[parameters('AdfsFarmCount')]",
+              "TypeName": "System.Integer"
+            },
+            {
+              "Name": "ADFSIPAddress",
+              "Value": "[parameters('adfsIP')]",
+              "TypeName": "System.String"
+            },
+            {
+              "Name": "usersArray",
+              "Value": "[parameters('usersArray')]",
+              "TypeName": "System.Object"
+            }
+            
+          ]
         },
         "protectedSettings": {
           "configurationArguments": {
