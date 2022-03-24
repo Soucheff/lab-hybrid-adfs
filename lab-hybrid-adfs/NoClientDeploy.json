@@ -270,49 +270,23 @@
         "settings": {
           "modulesUrl": "[variables('adDSCTemplate')]",
           "configurationFunction": "[variables('adDSCConfigurationFunction')]",
-          "properties": [
-            {
-              "Name": "Subject",
-              "Value": "[variables('WAPPubIpDnsFQDN')]",
-              "TypeName": "System.String"
-            },
-            {
-              "Name": "ADFSFarmCount",
-              "Value": "[parameters('AdfsFarmCount')]",
-              "TypeName": "System.Integer"
-            },
-            {
-              "Name": "AdminCreds",
-              "Value": {
-                "UserName": "[parameters('adminUsername')]",
-                "Password": "PrivateSettingsRef:AdminPassword"
-              },
-              "TypeName": "System.Management.Automation.PSCredential"
-            },
-            {
-              "Name": "ADFSIPAddress",
-              "Value": "[parameters('adfsIP')]",
-              "TypeName": "System.String"
-            },
-            {
-              "Name": "usersArray",
-              "Value": "[parameters('usersArray')]",
-              "TypeName": "System.Object"
-            },
-            {
-              "Name": "UserCreds",
-              "Value": {
-                "UserName": "user",
-                "Password": "PrivateSettingsRef:UserPassword"
-              },
-              "TypeName": "System.Management.Automation.PSCredential"
-            }
-          ]
+          "configurationArguments": {
+            "Subject": "[variables('WAPPubIpDnsFQDN')]",
+            "ADFSFarmCount": "[parameters('AdfsFarmCount')]",
+            "ADFSIPAddress": "[parameters('adfsIP')]",
+            "usersArray": "[parameters('usersArray')]"
+          }
         },
         "protectedSettings": {
-          "Items": {
-            "AdminPassword": "[parameters('adminPassword')]",
-            "UserPassword": "[parameters('defaultUserPassword')]"
+          "configurationArguments": {
+            "UserCreds": {
+              "Username": "user",
+              "Password": "[parameters('defaultUserPassword')]"
+            },
+            "AdminCreds": {
+              "Username": "[parameters('adminUsername')]",
+              "Password": "[parameters('adminPassword')]"
+            }
           }
         }
       }

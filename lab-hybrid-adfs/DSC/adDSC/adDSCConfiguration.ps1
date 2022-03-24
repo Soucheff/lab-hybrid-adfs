@@ -5,21 +5,27 @@ configuration DomainController
    param
    (
         [Parameter(Mandatory)]
+        [ValidateNotNullorEmpty()]
         [String]$Subject,
 
         [Parameter(Mandatory)]
+        [ValidateNotNullorEmpty()]
         [Int]$ADFSFarmCount,
 
         [Parameter(Mandatory)]
+        [ValidateNotNullorEmpty()]
         [System.Management.Automation.PSCredential]$AdminCreds,
 
         [Parameter(Mandatory)]
+        [ValidateNotNullorEmpty()]
         [String]$ADFSIPAddress,
 
 		[Parameter(Mandatory)]
+        [ValidateNotNullorEmpty()]
 		[Object]$usersArray,
 
 		[Parameter(Mandatory)]
+        [ValidateNotNullorEmpty()]
 		[System.Management.Automation.PSCredential]$UserCreds,
 
         [Int]$RetryCount=20,
