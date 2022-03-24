@@ -60,7 +60,7 @@ if (!(Test-Path -Path "$($completeFile)$step")) {
     Install-ADDSForest -DomainName $domain `
                        -DomainMode "7" `
                        -ForestMode "7" ` 
-                       -Force?$true `
+                       -Force:$true `
                        -NoRebootOnCompletion:$True ` 
                        -InstallDns:$true ` 
                        -CreateDnsDelegation:$false ` 
